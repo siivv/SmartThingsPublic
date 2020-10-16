@@ -24,7 +24,8 @@ definition(
 	description: "Set your lighting by rotating a cube containing a SmartSense Multi",
 	category: "SmartThings Labs",
 	iconUrl: "https://s3.amazonaws.com/smartapp-icons/Convenience/App-LightUpMyWorld.png",
-	iconX2Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/App-LightUpMyWorld@2x.png"
+	iconX2Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/App-LightUpMyWorld@2x.png",
+	pausable: true
 )
 
 /**********
@@ -79,12 +80,9 @@ def scenePage(params=[:]) {
 			href "devicePage", title: "Show Device States", params: [sceneId:sceneId], description: "", state: sceneIsDefined(sceneId) ? "complete" : "incomplete"
 		}
 
-		if (sceneId == currentSceneId) {
-			section {
-				href "saveStatesPage", title: "Record Current Device States", params: [sceneId:sceneId], description: ""
-			}
-		}
-
+        section {
+            href "saveStatesPage", title: "Record Current Device States", params: [sceneId:sceneId], description: ""
+        }
 	}
 }
 
@@ -225,7 +223,7 @@ private restoreStates(sceneId) {
 			if (type == "level") {
 				log.debug "${light.displayName} level is '$level'"
 				if (level != null) {
-					light.setLevel(value)
+					light.setLevel(level)
 				}
 			}
 			else if (type == "color") {
